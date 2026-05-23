@@ -2,6 +2,7 @@ package com.substring.easybuy.cart_order.controller;
 
 import com.substring.easybuy.cart_order.dto.OrderCreateRequest;
 import com.substring.easybuy.cart_order.dto.ProductResponse;
+import com.substring.easybuy.cart_order.dto.ProductSnapshot;
 import com.substring.easybuy.cart_order.service.OrderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +22,7 @@ public class OrderTestController {
 
     //array product ids:
     @PostMapping
-    public ResponseEntity<ProductResponse> createOrder(@RequestBody OrderCreateRequest request) {
+    public ResponseEntity<ProductSnapshot> createOrder(@RequestBody OrderCreateRequest request) {
 
         logger.info("order created request  received {}", request);
 

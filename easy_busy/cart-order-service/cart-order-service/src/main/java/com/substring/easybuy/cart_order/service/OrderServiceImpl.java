@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import com.substring.easybuy.cart_order.client.ProductClient;
 import com.substring.easybuy.cart_order.client.ProductClientTest;
 import com.substring.easybuy.cart_order.dto.*;
 import lombok.RequiredArgsConstructor;
@@ -46,14 +47,16 @@ public class OrderServiceImpl implements OrderService {
     private final RestClient restClient;
 
     private final RestTemplate restTemplate;
-    private  final ProductClientTest productClientTest;
+    private  final ProductClient productClient;
 
 
-    private ProductResponse getProduct(String productId) {
+
+    //get the single product
+    private ProductSnapshot getProduct(String productId) {
 
         try {
 
-            return productClientTest.getProductById(productId);
+            return productClient.getProductById(UUID.fromString(productId));
 //            var productUrl = "http://PRODUCT-SERVICE:8081/api/products/" + productId;
 //            log.info("get product url {}", productUrl);
 //
@@ -97,13 +100,13 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public ProductResponse createOrder(OrderCreateRequest orderCreateRequest) {
+    public ProductSnapshot createOrder(OrderCreateRequest orderCreateRequest) {
 
         //check products ids:
         //product information
         String productId = orderCreateRequest.items().getFirst().productId();
 
-        ProductResponse product = this.getProduct(productId);
+        ProductSnapshot product = this.getProduct(productId);
 
         //logic to create order
 

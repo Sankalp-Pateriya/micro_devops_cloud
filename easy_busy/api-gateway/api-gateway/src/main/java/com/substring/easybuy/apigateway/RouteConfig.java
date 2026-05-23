@@ -14,7 +14,7 @@ public class RouteConfig {
     private final String productServiceId;
     private final String cartOrderServiceId;
 
-    public RouteConfig(@Value("${product.service.id}") String productServiceId, @Value("${cartorder.service.id}") String cartOrderServiceId) {
+    public RouteConfig(@Value("${PRODUCT_SERVICE_NAME}") String productServiceId, @Value("${CARD_ORDER_SERVICE_NAME}") String cartOrderServiceId) {
         this.productServiceId = productServiceId;
         this.cartOrderServiceId = cartOrderServiceId;
     }
@@ -31,11 +31,11 @@ public class RouteConfig {
 
                                                 .
                                         rewritePath("/products/?(?<remaining>.*)", "/${remaining}"))
-                                .uri(productServiceId))
+                                .uri("lb://"+productServiceId))
                 .route("cart-order-route", route ->
                         route.path("/cart-orders/**")
                                 .filters(f -> f.rewritePath("/cart-orders/?(?<remaining>.*)", "/${remaining}"))
-                                .uri(cartOrderServiceId)
+                                .uri("lb://"+cartOrderServiceId)
                 )
 
 

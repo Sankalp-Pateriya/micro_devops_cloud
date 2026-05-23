@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: configserver:${CONFIG_SERVER_URL:http://localhost:8079}
   application:
     name: API-GATEWAY
   cloud:
@@ -34,11 +36,3 @@ eureka:
   instance:
     preferIpAddress: true
 
-
-
-product:
-  service:
-    id: lb://PRODUCT-SERVICE
-cartorder:
-  service:
-    id: lb://CART-ORDER-SERVICE

@@ -3,15 +3,12 @@ package com.substring.easybuy.cart_order.service;
 import java.util.List;
 import java.util.UUID;
 
-import com.substring.easybuy.cart_order.dto.CheckoutRequest;
-import com.substring.easybuy.cart_order.dto.OrderCreateRequest;
-import com.substring.easybuy.cart_order.dto.OrderResponse;
-import com.substring.easybuy.cart_order.dto.ProductResponse;
+import com.substring.easybuy.cart_order.dto.*;
 
 public interface OrderService {
 
 
-	ProductResponse createOrder(OrderCreateRequest orderCreateRequest) ;
+	ProductSnapshot createOrder(OrderCreateRequest orderCreateRequest) ;
 
 	OrderResponse checkout(String userId, CheckoutRequest request);
 
