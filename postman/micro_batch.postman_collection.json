@@ -334,6 +334,25 @@
               "response": []
             },
             {
+              "name": "get single product",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/30779b6e-0cf0-4b8a-acd2-9580cd20ca10",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "30779b6e-0cf0-4b8a-acd2-9580cd20ca10"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
               "name": "upload product image",
               "request": {
                 "method": "POST",
@@ -429,7 +448,7 @@
                 "header": [],
                 "body": {
                   "mode": "raw",
-                  "raw": "{\r\n    \"title\":\"Iphone 13\",\r\n    \"shortDesc\":\"This is phone launched in 2023\",\r\n    \"longDesc\":\"Iphone  13 ,This is phone launched in 2023 \",\r\n    \"price\":80000.0,\r\n    \"discount\":20,\r\n    \"live\":false\r\n}",
+                  "raw": "{\r\n    \"title\":\"Iphone 14\",\r\n    \"shortDesc\":\"This is phone launched in 2023\",\r\n    \"longDesc\":\"Iphone  13 ,This is phone launched in 2023 \",\r\n    \"price\":90000.0,\r\n    \"discount\":20,\r\n    \"live\":true\r\n}",
                   "options": {
                     "raw": {
                       "language": "json"
@@ -444,6 +463,248 @@
                   "path": [
                     "api",
                     "products"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get imgkit folder",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "{{base_url}}/api/products/imgkit-folder",
+                  "host": [
+                    "{{base_url}}"
+                  ],
+                  "path": [
+                    "api",
+                    "products",
+                    "imgkit-folder"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "refresh",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": {
+                  "raw": "http://172.26.176.1:8081/actuator/refresh",
+                  "protocol": "http",
+                  "host": [
+                    "172",
+                    "26",
+                    "176",
+                    "1"
+                  ],
+                  "port": "8081",
+                  "path": [
+                    "actuator",
+                    "refresh"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "order-service",
+          "item": [
+            {
+              "name": "create order",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"items\":[\r\n        {\r\n            \"productId\":\"30779b6e-0cf0-4b8a-acd2-9580cd20ca10\",\r\n            \"quantity\":4\r\n        },\r\n          {\r\n            \"productId\":\"0018cf9b-a95f-4c6a-af2a-45530a76a99f\",\r\n            \"quantity\":1\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8082/api/test/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8082",
+                  "path": [
+                    "api",
+                    "test",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "api-gateway",
+          "item": [
+            {
+              "name": "get products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "localhost:8080/products/api/products",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "products",
+                    "api",
+                    "products"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "get single product",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "localhost:8080/product-service/api/products/0018cf9b-a95f-4c6a-af2a-45530a76a99f",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "product-service",
+                    "api",
+                    "products",
+                    "0018cf9b-a95f-4c6a-af2a-45530a76a99f"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create product Copy",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"title\":\"Iphone 17 pro max\",\r\n    \"shortDesc\":\"This is phone launched in 2023\",\r\n    \"longDesc\":\"Iphone  13 ,This is phone launched in 2023 \",\r\n    \"price\":90000.0,\r\n    \"discount\":20,\r\n    \"live\":true\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:8080/product-service/api/products",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "product-service",
+                    "api",
+                    "products"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "create order",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\r\n    \"items\":[\r\n        {\r\n            \"productId\":\"30779b6e-0cf0-4b8a-acd2-9580cd20ca10\",\r\n            \"quantity\":4\r\n        },\r\n          {\r\n            \"productId\":\"0018cf9b-a95f-4c6a-af2a-45530a76a99f\",\r\n            \"quantity\":1\r\n        }\r\n    ]\r\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "http://localhost:8080/cart-orders/api/test/orders",
+                  "protocol": "http",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8080",
+                  "path": [
+                    "cart-orders",
+                    "api",
+                    "test",
+                    "orders"
+                  ]
+                }
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "config server",
+          "item": [
+            {
+              "name": "ecryption",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "user",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:8079/encrypt",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8079",
+                  "path": [
+                    "encrypt"
+                  ]
+                }
+              },
+              "response": []
+            },
+            {
+              "name": "decrypt",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "body": {
+                  "mode": "raw",
+                  "raw": "d7c76f5da5303310f222a43e2f86cc701a60a2244c34dcb699314b5d6f15314f",
+                  "options": {
+                    "raw": {
+                      "language": "text"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "localhost:8079/decrypt",
+                  "host": [
+                    "localhost"
+                  ],
+                  "port": "8079",
+                  "path": [
+                    "decrypt"
                   ]
                 }
               },
