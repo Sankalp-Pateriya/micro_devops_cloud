@@ -14,34 +14,40 @@ public class RouteConfig {
     private final String productServiceId;
     private final String cartOrderServiceId;
 
+
     public RouteConfig(@Value("${PRODUCT_SERVICE_NAME}") String productServiceId, @Value("${CARD_ORDER_SERVICE_NAME}") String cartOrderServiceId) {
         this.productServiceId = productServiceId;
         this.cartOrderServiceId = cartOrderServiceId;
+        System.out.println(this.productServiceId);
+        System.out.println(this.cartOrderServiceId);
     }
 
     @Bean
     public RouteLocator route(RouteLocatorBuilder builder) {
         return builder.routes()
-                .route("product-route", route ->
-                        route
 
-                                .path("/products/**")
-                                .filters(f -> f
-                                        .addRequestHeader("x-api-gateway", "value from api gateway")
+                .route("product-route", route -> route
 
-                                                .
-                                        rewritePath("/products/?(?<remaining>.*)", "/${remaining}"))
-                                .uri("lb://"+productServiceId))
-                .route("cart-order-route", route ->
-                        route.path("/cart-orders/**")
-                                .filters(f -> f.rewritePath("/cart-orders/?(?<remaining>.*)", "/${remaining}"))
-                                .uri("lb://"+cartOrderServiceId)
-                )
+                        .path("/products/**")
+                        .filters(f ->
+                                f.addRequestHeader("x-api-gateway", "value from api gateway")
+                                        .circuitBreaker(c->
+                                                c.setName("productCircuitBreaker")
+                                                        .setFallbackUri("forward:/product-fallback")
+                                                )
+                                        .rewritePath("/products/?(?<remaining>.*)", "/${remaining}"))
+                        .uri("lb://" + productServiceId))
+
+
+
+                .route("cart-order-route", route -> route
+                        .path("/cart-orders/**")
+                        .filters(f -> f.rewritePath("/cart-orders/?(?<remaining>.*)", "/${remaining}")).
+                        uri("lb://" + cartOrderServiceId))
 
 
                 .build();
     }
-
 
 
 }

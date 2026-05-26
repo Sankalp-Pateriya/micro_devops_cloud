@@ -10,6 +10,7 @@ import java.util.UUID;
 import com.substring.easybuy.cart_order.client.ProductClient;
 import com.substring.easybuy.cart_order.client.ProductClientTest;
 import com.substring.easybuy.cart_order.dto.*;
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -47,16 +48,30 @@ public class OrderServiceImpl implements OrderService {
     private final RestClient restClient;
 
     private final RestTemplate restTemplate;
-    private  final ProductClient productClient;
-
+    private final ProductClient productClient;
 
 
     //get the single product
+//    @CircuitBreaker(name="heyCBC",fallbackMethod = )
     private ProductSnapshot getProduct(String productId) {
 
         try {
 
-            return productClient.getProductById(UUID.fromString(productId));
+            ProductSnapshot productById = productClient.getProductById(UUID.fromString(productId));
+            if (productById == null) {
+
+                return new ProductSnapshot(
+                        UUID.randomUUID(),
+                        "Demo Product",
+                        "This is demo product",
+                        "This is long desc of demo product",
+                        23432.234,
+                        500,
+                        true
+                );
+            }
+
+            return productById;
 //            var productUrl = "http://PRODUCT-SERVICE:8081/api/products/" + productId;
 //            log.info("get product url {}", productUrl);
 //
@@ -92,7 +107,7 @@ public class OrderServiceImpl implements OrderService {
 
             e.printStackTrace();
             throw new RuntimeException("Product not found " + e.getStatusCode());
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             throw new RuntimeException("something went wrong");
         }
