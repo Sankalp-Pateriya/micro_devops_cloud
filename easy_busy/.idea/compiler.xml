@@ -12,20 +12,6 @@
         <module name="common-service" />
         <module name="service-discovery" />
       </profile>
-      <profile name="Annotation profile for products-service" enabled="true">
-        <sourceOutputDir name="target/generated-sources/annotations" />
-        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <processorPath useClasspath="false">
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
-        </processorPath>
-        <module name="products-service" />
-        <module name="payment-service" />
-        <module name="users-service" />
-        <module name="ai-service" />
-        <module name="notifications-service" />
-      </profile>
       <profile name="Annotation profile for cart-order-service" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
@@ -33,8 +19,13 @@
         <processorPath useClasspath="false">
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.46/lombok-1.18.46.jar" />
         </processorPath>
-        <module name="cart-order-service" />
+        <module name="products-service" />
+        <module name="payment-service" />
         <module name="inventory-service" />
+        <module name="users-service" />
+        <module name="cart-order-service" />
+        <module name="ai-service" />
+        <module name="notifications-service" />
       </profile>
     </annotationProcessing>
   </component>

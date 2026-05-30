@@ -11,6 +11,7 @@ import com.substring.easybuy.cart_order.client.ProductClient;
 import com.substring.easybuy.cart_order.client.ProductClientTest;
 import com.substring.easybuy.cart_order.dto.*;
 import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -115,18 +116,23 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    @Retry(name = "createOrderRetry", fallbackMethod = "createOrderFallBack")
     public ProductSnapshot createOrder(OrderCreateRequest orderCreateRequest) {
-
         //check products ids:
         //product information
+        log.info("retry trying....");
         String productId = orderCreateRequest.items().getFirst().productId();
-
         ProductSnapshot product = this.getProduct(productId);
-
         //logic to create order
-
-
         return product;
+    }
+
+
+    //fallback...for retry..
+    public ProductSnapshot createOrderFallback(OrderCreateRequest orderCreateRequest, Throwable t) {
+        log.info("Create order fallback...");
+        log.info("exception {} ", t.getMessage());
+        return null;
     }
 
     @Override

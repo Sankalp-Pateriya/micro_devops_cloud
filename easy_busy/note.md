@@ -5,3 +5,11 @@ docker run -d --name postgres-db -e POSTGRES_DB=productdb -e POSTGRES_USER=user 
 
 
 ```
+
+
+## Command to start redis
+
+```bash
+docker run -d --name redis-server -p 6379:6379 redis
+
+```
