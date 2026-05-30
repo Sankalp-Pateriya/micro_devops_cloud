@@ -1,0 +1,515 @@
+{
+  "info": {
+    "_postman_id": "80275764-1fa2-4568-879b-6fbfd71ec79e",
+    "name": "easy_buy",
+    "description": "Postman collection for Easy Buy E-commerce APIs including Direct and API Gateway routed folders.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Direct Service Endpoints",
+      "item": [
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Register User",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"password\": \"securepassword123\",\n  \"phoneNumber\": \"+1234567890\",\n  \"address\": \"123 Main St, New York, NY\",\n  \"role\": \"USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8085/api/users"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8085/api/users/e6a256a4-2db3-43ef-b7c4-c2c6114b74a3"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by Email",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8085/api/users/email/johndoe@example.com"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Users",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8085/api/users"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Categories",
+          "item": [
+            {
+              "name": "Create Category",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Electronics\",\n  \"description\": \"Gadgets, smartphones, and computers\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8081/api/categories"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Categories",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8081/api/categories"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Create Product",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Smart Watch\",\n  \"shortDesc\": \"Fitness smartwatch with heart monitor\",\n  \"longDesc\": \"Track steps, sleep, oxygen levels with 7 days battery life\",\n  \"price\": 99.99,\n  \"discount\": 10,\n  \"live\": true,\n  \"categories\": [\n    { \"id\": 1 }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8081/api/products"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8081/api/products?page=0&size=12"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Inventory",
+          "item": [
+            {
+              "name": "Get All Inventory",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8082/api/inventories"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "Get User Cart",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8083/api/carts/johndoe@example.com"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "API Gateway Routed Endpoints",
+      "item": [
+        {
+          "name": "Users",
+          "item": [
+            {
+              "name": "Register User",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"John Doe\",\n  \"email\": \"johndoe@example.com\",\n  \"password\": \"securepassword123\",\n  \"phoneNumber\": \"+1234567890\",\n  \"address\": \"123 Main St, New York, NY\",\n  \"role\": \"USER\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/users/api/users"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/users/api/users/e6a256a4-2db3-43ef-b7c4-c2c6114b74a3"
+              },
+              "response": []
+            },
+            {
+              "name": "Get User by Email",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/users/api/users/email/johndoe@example.com"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Users",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/users/api/users"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Categories",
+          "item": [
+            {
+              "name": "Create Category",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Electronics\",\n  \"description\": \"Gadgets, smartphones, and computers\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/products/api/categories"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Categories",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/products/api/categories"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Products",
+          "item": [
+            {
+              "name": "Create Product",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"title\": \"Smart Watch\",\n  \"shortDesc\": \"Fitness smartwatch with heart monitor\",\n  \"longDesc\": \"Track steps, sleep, oxygen levels with 7 days battery life\",\n  \"price\": 99.99,\n  \"discount\": 10,\n  \"live\": true,\n  \"categories\": [\n    { \"id\": 1 }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/products/api/products"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Products",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/products/api/products?page=0&size=12"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Product by ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/products/api/products/b1fa4852-c632-4bf1-81ee-325bdfa95612"
+              },
+              "response": []
+            },
+            {
+              "name": "Link Category to Product",
+              "request": {
+                "method": "POST",
+                "header": [],
+                "url": "http://localhost:8080/products/api/products/b1fa4852-c632-4bf1-81ee-325bdfa95612/categories/1"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Reviews",
+          "item": [
+            {
+              "name": "Add Product Review",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"reviewerName\": \"Alice Johnson\",\n  \"rating\": 5,\n  \"comment\": \"Excellent display and build quality!\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/products/api/products/b1fa4852-c632-4bf1-81ee-325bdfa95612/reviews"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Reviews by Product ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/products/api/reviews/product/b1fa4852-c632-4bf1-81ee-325bdfa95612"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Inventory",
+          "item": [
+            {
+              "name": "Initialize Inventory",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": \"b1fa4852-c632-4bf1-81ee-325bdfa95612\",\n  \"sku\": \"SMART-WATCH-BLK\",\n  \"productName\": \"Smart Watch Black\",\n  \"warehouseLocation\": \"Aisle 3 Shelf B\",\n  \"availableQuantity\": 150,\n  \"reservedQuantity\": 0,\n  \"reorderLevel\": 15,\n  \"active\": true\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/inventories/api/inventories"
+              },
+              "response": []
+            },
+            {
+              "name": "Get All Inventory",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/inventories/api/inventories"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Inventory by Product ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/inventories/api/inventories/product/b1fa4852-c632-4bf1-81ee-325bdfa95612"
+              },
+              "response": []
+            },
+            {
+              "name": "Reserve Stock",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"quantity\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/inventories/api/inventories/1/reserve"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Cart",
+          "item": [
+            {
+              "name": "Get User Cart",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/cart-orders/api/carts/johndoe@example.com"
+              },
+              "response": []
+            },
+            {
+              "name": "Add Item to Cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"productId\": \"b1fa4852-c632-4bf1-81ee-325bdfa95612\",\n  \"quantity\": 2\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/cart-orders/api/carts/johndoe@example.com/items"
+              },
+              "response": []
+            }
+          ]
+        },
+        {
+          "name": "Order",
+          "item": [
+            {
+              "name": "Checkout Cart",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json",
+                    "type": "text"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"shippingAddress\": \"456 Oak St, Boston, MA\",\n  \"paymentMethod\": \"CREDIT_CARD\",\n  \"paymentDetails\": \"1234-5678-9876-5432\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": "http://localhost:8080/cart-orders/api/orders/johndoe@example.com/checkout"
+              },
+              "response": []
+            },
+            {
+              "name": "Get Order History by User ID",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": "http://localhost:8080/cart-orders/api/orders/user/johndoe@example.com"
+              },
+              "response": []
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -42,6 +42,7 @@ public class InventoryItem {
 	@Column(nullable = false)
 	private Integer reservedQuantity;
 
+	//threshold--> refill--> 5
 	@Column(nullable = false)
 	private Integer reorderLevel;
 

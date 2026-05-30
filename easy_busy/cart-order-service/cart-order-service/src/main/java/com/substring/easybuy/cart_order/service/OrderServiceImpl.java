@@ -116,7 +116,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    @Retry(name = "createOrderRetry", fallbackMethod = "createOrderFallBack")
+    @Retry(name = "createOrderRetry", fallbackMethod = "createOrderFallback")
     public ProductSnapshot createOrder(OrderCreateRequest orderCreateRequest) {
         //check products ids:
         //product information

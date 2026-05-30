@@ -43,6 +43,11 @@ public class OrderTestController {
 
     }
 
+    public ResponseEntity<ProductSnapshot> createOrderRateLimiterFallback(OrderCreateRequest request, Throwable t) {
+        logger.info("Rate limiter fallback triggered: {}", t.getMessage());
+        return ResponseEntity.status(HttpStatus.TOO_MANY_REQUESTS).build();
+    }
+
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleException(RuntimeException e) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());

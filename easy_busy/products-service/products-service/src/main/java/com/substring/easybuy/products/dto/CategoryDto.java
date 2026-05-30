@@ -17,5 +17,5 @@ public class CategoryDto {
 
     @NotBlank(message = "title is required")
     private String title;
-    private List<ProductDto> products;
+//    private List<ProductDto> products;
 }

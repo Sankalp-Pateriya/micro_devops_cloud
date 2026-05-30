@@ -102,7 +102,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public InventoryResponse adjustStock(Long id, AdjustStockRequest request) {
-		InventoryItem item = findEntity(id);
+		InventoryItem item = findEntityForUpdate(id);
 		int delta = request.quantityDelta();
 		int nextAvailable = safeInt(item.getAvailableQuantity()) + delta;
 		if (nextAvailable < 0) {
@@ -114,7 +114,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public InventoryResponse reserveStock(Long id, ReserveStockRequest request) {
-		InventoryItem item = findEntity(id);
+		InventoryItem item = findEntityForUpdate(id);
 		int quantity = request.quantity();
 		int available = safeInt(item.getAvailableQuantity());
 		if (available < quantity) {
@@ -127,7 +127,7 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public InventoryResponse releaseStock(Long id, ReleaseStockRequest request) {
-		InventoryItem item = findEntity(id);
+		InventoryItem item = findEntityForUpdate(id);
 		int quantity = request.quantity();
 		int reserved = safeInt(item.getReservedQuantity());
 		if (reserved < quantity) {
@@ -140,14 +140,14 @@ public class InventoryServiceImpl implements InventoryService {
 
 	@Override
 	public InventoryResponse reserveStockByProductId(UUID productId, ReserveStockRequest request) {
-		InventoryItem item = repository.findByProductId(productId)
+		InventoryItem item = repository.findByProductIdForUpdate(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Inventory not found for productId: " + productId));
 		return reserve(item, request.quantity());
 	}
 
 	@Override
 	public InventoryResponse releaseStockByProductId(UUID productId, ReleaseStockRequest request) {
-		InventoryItem item = repository.findByProductId(productId)
+		InventoryItem item = repository.findByProductIdForUpdate(productId)
 				.orElseThrow(() -> new ResourceNotFoundException("Inventory not found for productId: " + productId));
 		return release(item, request.quantity());
 	}
@@ -160,6 +160,11 @@ public class InventoryServiceImpl implements InventoryService {
 
 	private InventoryItem findEntity(Long id) {
 		return repository.findById(id)
+				.orElseThrow(() -> new ResourceNotFoundException("Inventory not found for id: " + id));
+	}
+
+	private InventoryItem findEntityForUpdate(Long id) {
+		return repository.findByIdForUpdate(id)
 				.orElseThrow(() -> new ResourceNotFoundException("Inventory not found for id: " + id));
 	}
 
