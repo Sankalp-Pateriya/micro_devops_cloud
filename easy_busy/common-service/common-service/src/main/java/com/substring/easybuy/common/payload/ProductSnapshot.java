@@ -1,4 +1,4 @@
-package com.substring.easybuy.cart_order.dto;
+package com.substring.easybuy.common.payload;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 

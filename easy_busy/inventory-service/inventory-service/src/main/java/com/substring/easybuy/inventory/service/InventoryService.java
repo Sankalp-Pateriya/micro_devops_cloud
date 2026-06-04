@@ -10,10 +10,15 @@ import com.substring.easybuy.inventory.dto.ReleaseStockRequest;
 import com.substring.easybuy.inventory.dto.ReserveStockRequest;
 import com.substring.easybuy.inventory.dto.UpdateInventoryRequest;
 
+
+//inventory item mein opreations :
+//logics:
 public interface InventoryService {
 
+	//create the inventory
 	InventoryResponse create(CreateInventoryRequest request);
 
+	//update inventory
 	InventoryResponse update(Long id, UpdateInventoryRequest request);
 
 	InventoryResponse getById(Long id);

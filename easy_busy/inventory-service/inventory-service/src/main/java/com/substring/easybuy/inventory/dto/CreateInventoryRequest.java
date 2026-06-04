@@ -9,7 +9,7 @@ import jakarta.validation.constraints.NotNull;
 public record CreateInventoryRequest(
 		@NotNull UUID productId,
 		@NotBlank String sku,
-		@NotBlank String productName,
+		String productName,
 		@NotBlank String warehouseLocation,
 		@NotNull @Min(0) Integer availableQuantity,
 		@Min(0) Integer reservedQuantity,

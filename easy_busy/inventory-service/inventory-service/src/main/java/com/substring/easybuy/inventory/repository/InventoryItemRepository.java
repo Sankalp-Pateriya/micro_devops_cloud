@@ -23,6 +23,7 @@ public interface InventoryItemRepository extends JpaRepository<InventoryItem, Lo
 
 
 
+	//find inventory by inventory item id
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Query("select i from InventoryItem i where i.id = :id")
 	Optional<InventoryItem> findByIdForUpdate(@Param("id") Long id);
@@ -31,16 +32,19 @@ public interface InventoryItemRepository extends JpaRepository<InventoryItem, Lo
 
 
 
+	//find inventory by productid
 	@Lock(LockModeType.PESSIMISTIC_WRITE)
 	@Query("select i from InventoryItem i where i.productId = :productId")
 	Optional<InventoryItem> findByProductIdForUpdate(@Param("productId") UUID productId);
 
+	//query is create automatically
 	boolean existsBySku(String sku);
 
 	boolean existsByProductId(UUID productId);
 
 	List<InventoryItem> findByActiveTrueOrderByProductNameAsc();
 
+	//for to create custom finder methods
 	List<InventoryItem> findByAvailableQuantityLessThanEqualAndActiveTrueOrderByAvailableQuantityAsc(int threshold);
 }
 

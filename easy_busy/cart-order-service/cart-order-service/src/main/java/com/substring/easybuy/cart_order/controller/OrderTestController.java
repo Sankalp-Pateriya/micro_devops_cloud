@@ -1,12 +1,11 @@
 package com.substring.easybuy.cart_order.controller;
 
 import com.substring.easybuy.cart_order.dto.OrderCreateRequest;
-import com.substring.easybuy.cart_order.dto.ProductResponse;
-import com.substring.easybuy.cart_order.dto.ProductSnapshot;
+
 import com.substring.easybuy.cart_order.service.OrderService;
+import com.substring.easybuy.common.payload.ProductSnapshot;
 import io.github.resilience4j.ratelimiter.annotation.RateLimiter;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;

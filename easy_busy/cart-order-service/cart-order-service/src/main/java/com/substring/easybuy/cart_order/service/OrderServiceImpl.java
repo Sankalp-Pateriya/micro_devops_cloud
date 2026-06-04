@@ -8,14 +8,12 @@ import java.util.List;
 import java.util.UUID;
 
 import com.substring.easybuy.cart_order.client.ProductClient;
-import com.substring.easybuy.cart_order.client.ProductClientTest;
+
 import com.substring.easybuy.cart_order.dto.*;
-import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+import com.substring.easybuy.common.payload.ProductSnapshot;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -33,7 +31,6 @@ import com.substring.easybuy.cart_order.repository.CartRepository;
 import com.substring.easybuy.cart_order.repository.OrderRepository;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClient;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 @Slf4j
@@ -139,17 +136,25 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse checkout(String userId, CheckoutRequest request) {
         Cart cart = cartRepository.findByUserIdAndStatus(normalizeUserId(userId), CartStatus.ACTIVE)
                 .orElseThrow(() -> new ResourceNotFoundException("Active cart not found for userId: " + userId));
+
+
         if (cart.getItems().isEmpty()) {
             throw new BusinessRuleException("Cart is empty");
         }
 
+        //i will actually use this list for serve quantity
         List<InventorySnapshot> reservedSnapshots = new ArrayList<>();
+
+
         try {
+
+//            for all cart items
             for (CartItem item : cart.getItems()) {
                 reservedSnapshots.add(inventoryClient.reserveByProductId(item.getProductId(), new ReserveStockRequest(item.getQuantity())));
             }
 
             Order order = buildOrderFromCart(cart, request);
+
             Order saved = orderRepository.save(order);
 
             cart.setStatus(CartStatus.CHECKED_OUT);
@@ -201,6 +206,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderResponse cancelOrder(Long orderId) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(() -> new ResourceNotFoundException("Order not found for id: " + orderId));
+
         if (order.getStatus() == OrderStatus.CANCELLED) {
             return toResponse(order);
         }
@@ -229,13 +235,18 @@ public class OrderServiceImpl implements OrderService {
         Order order = new Order();
         order.setOrderNumber(UUID.randomUUID().toString());
         order.setUserId(cart.getUserId());
+        order.setBillingName(request.billingName().trim());
+        order.setBillingPhone(request.billingPhone().trim());
+        order.setExtraInformation(request.extraInformation().trim());
         order.setShippingAddress(request.shippingAddress().trim());
         order.setPaymentMethod(request.paymentMethod());
         order.setStatus(OrderStatus.CONFIRMED);
         order.setItems(new ArrayList<>());
 
         BigDecimal total = BigDecimal.ZERO;
+
         for (CartItem cartItem : cart.getItems()) {
+
             OrderItem orderItem = new OrderItem();
             orderItem.setOrder(order);
             orderItem.setProductId(cartItem.getProductId());
@@ -257,9 +268,13 @@ public class OrderServiceImpl implements OrderService {
                 .toList();
         return new OrderResponse(
                 order.getId(),
+                order.getBillingName(),
+                order.getBillingPhone(),
                 order.getOrderNumber(),
                 order.getUserId(),
                 order.getShippingAddress(),
+                order.getPaymentStatus(),
+                order.getExtraInformation(),
                 order.getPaymentMethod(),
                 order.getStatus(),
                 order.getTotalAmount(),

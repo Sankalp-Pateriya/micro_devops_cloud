@@ -55,6 +55,9 @@ public class InventoryItem {
 	@Column(nullable = false)
 	private Instant updatedAt;
 
+	private  String reasonToAdjustQuantity;
+
+	// executed before saving the entity
 	@PrePersist
 	void onCreate() {
 		Instant now = Instant.now();
@@ -176,5 +179,13 @@ public class InventoryItem {
 
 	private int safeInt(Integer value) {
 		return value == null ? 0 : value;
+	}
+
+	public String getReasonToAdjustQuantity() {
+		return reasonToAdjustQuantity;
+	}
+
+	public void setReasonToAdjustQuantity(String reasonToAdjustQuantity) {
+		this.reasonToAdjustQuantity = reasonToAdjustQuantity;
 	}
 }
