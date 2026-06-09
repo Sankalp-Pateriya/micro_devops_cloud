@@ -10,6 +10,8 @@ import java.util.UUID;
 import com.substring.easybuy.cart_order.client.ProductClient;
 
 import com.substring.easybuy.cart_order.dto.*;
+import com.substring.easybuy.cart_order.producer.OrderEventPublisher;
+import com.substring.easybuy.common.events.OrderEvent;
 import com.substring.easybuy.common.payload.ProductSnapshot;
 import io.github.resilience4j.retry.annotation.Retry;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +49,8 @@ public class OrderServiceImpl implements OrderService {
 
     private final RestTemplate restTemplate;
     private final ProductClient productClient;
+
+    private  final OrderEventPublisher orderEventPublisher;
 
 
     //get the single product
@@ -161,6 +165,15 @@ public class OrderServiceImpl implements OrderService {
             cart.setCheckedOutAt(Instant.now());
             cart.getItems().clear();
             cartRepository.save(cart);
+
+            //order event publish
+            OrderEvent  orderEvent=new OrderEvent();
+            orderEvent.setOrderId(saved.getId());
+            orderEvent.setMessage("Order is created successfully...");
+            orderEvent.setTotalAmount(saved.getTotalAmount());
+            orderEvent.setUserId(saved.getUserId());
+            orderEvent.setStatus(saved.getStatus().toString());
+            orderEventPublisher.publishOrderCreatedEvent(orderEvent);
 
             return toResponse(saved);
         } catch (RuntimeException ex) {
